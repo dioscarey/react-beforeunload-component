@@ -4,7 +4,7 @@
   "description": "Before unload react component",
   "main": "dist/index.js",
   "scripts": {
-    "build": "webpack --config ./webpack.config.js --progress --mode production"
+    "build": "webpack --config ./webpack.config.js --progress --mode development"
   },
   "repository": {
     "type": "git",
@@ -28,9 +28,16 @@
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-loader": "^8.1.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   },
   "files": [
     "dist/*"

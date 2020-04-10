@@ -32,22 +32,16 @@ const About = () => {
 }
 
 
-class Home extends Component {
-  constructor() {
-    super()
-  }
-  render(){
-    return (
-      <div>
-        <BeforeUnload
-        blockRoute={true}        
-          >
-          <h2>Component Before Un Load</h2>
-        </BeforeUnload>
-      </div>
-    )
-  }
-  
+const Home = () => {
+  return (
+    <div>
+      <BeforeUnload
+      blockRoute={true}        
+        >
+        <h2>Component Before Un Load</h2>
+      </BeforeUnload>
+    </div>
+  )
 }
 
 // This example show how you could create a custom

@@ -46,9 +46,9 @@ const BeforeUnload = ({
     const r = confirm("Are you sure to leave?!");
     setShowModal(false)
     if (r == true) {
-      onModalSubmitted()
+      handleModalLeave()
     } else {
-      onModalClose()
+      handleModalCancel()
     }
   }
 
@@ -122,14 +122,14 @@ const BeforeUnload = ({
    */
 
   return (
-    <div>
+    <React.Fragment>
       {showModal && (
         modalComponentHandler 
         && modalComponentHandler({handleModalLeave, handleModalCancel}) 
         || defaultModalHandler()
       )}
       {children}
-    </div>
+    </React.Fragment>
   )
 }
 

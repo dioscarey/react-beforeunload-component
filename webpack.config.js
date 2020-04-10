@@ -1,11 +1,17 @@
 
 module.exports = {
   entry: __dirname + '/src/index.jsx',
+  output: {
+    path: __dirname + '/dist',
+    filename: 'index.js',
+    publicPath: '/',
+    libraryTarget: 'umd',
+  },
   module:  {
     rules: [
       {
           test: /\.jsx$/,
-          exclude: /(node_modules|bower_components)/,
+          exclude: /(node_modules|bower_components|example|dist)/,
           use: {
             loader: 'babel-loader',
             options: {
@@ -15,12 +21,7 @@ module.exports = {
       },
     ]
   },
-  resolve: {
-    extensions: ['*', '.js', '.jsx']
-  },
-  output: {
-    path: __dirname + '/dist',
-    publicPath: '/',
-    filename: 'index.js'
+  externals: {
+    'react': 'umd react' 
   }
 };
