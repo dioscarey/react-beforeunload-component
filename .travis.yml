@@ -4,4 +4,6 @@ node_js:
   - 10
 
 script:
+ - npm i webpack
+ - npm i webpack-cli
  - npm run -s build
