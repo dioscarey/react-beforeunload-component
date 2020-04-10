@@ -18,9 +18,9 @@
   "author": "Oscar D. Rendón L.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/applike/react-beforeunload-component/issues"
+    "url": "https://github.com/dioscarey/react-beforeunload-component/issues"
   },
-  "homepage": "https://github.com/applike/react-beforeunload-component#readme",
+  "homepage": "https://github.com/dioscarey/react-beforeunload-component#readme",
   "dependencies": {
     "clean-webpack-plugin": "^3.0.0"
   },
