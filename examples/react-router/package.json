@@ -1,0 +1,24 @@
+{
+  "name": "react-router",
+  "private": true,
+  "description": "Before Unload",
+  "version": "1.0.0",
+  "author": "Oscar D. Rendon L.",
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "react-hot-loader": "^4.12.19",
+    "webpack-dev-server": "^3.10.3",
+    "react-beforeunload-component": "^1.0.0"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "react-beforeunload-component",
+  "version": "1.0.0",
+  "description": "Before unload react component",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "webpack --config ./webpack.config.js --progress --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/disocarey/react-beforeunload-component.git"
+  },
+  "keywords": [
+    "react-beforeunload",
+    "beforeunload",
+    "beforeunload-react"
+  ],
+  "author": "Oscar D. Rendón L.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/applike/react-beforeunload-component/issues"
+  },
+  "homepage": "https://github.com/applike/react-beforeunload-component#readme",
+  "dependencies": {
+    "clean-webpack-plugin": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "babel-loader": "^8.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "files": [
+    "dist/*"
+  ]
+}
