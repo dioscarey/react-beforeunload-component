@@ -1,6 +1,6 @@
 //* modules
 import React, { useEffect, useState } from "react"
-
+import PropTypes from 'prop-types';
 /** *========================================
  ** Main Function Hook -  Before unload
  */
@@ -12,16 +12,15 @@ const BeforeUnload = ({
   replace = false, 
   children, 
   handleAfterLeave,   
-  modalComponentHandler 
+  modalComponentHandler,
+  alertMessage = "Are you sure to leave? Changes will not be saved."
 }) => {
-
   /**
    * * States
    */
 
   const [showModal, setShowModal] = useState(false)
   const [internalData, setInternalData] = useState({})
-
   /**
    * * Functions
    */  
@@ -43,7 +42,7 @@ const BeforeUnload = ({
   }
 
   const defaultModalHandler = () => {
-    const r = confirm("Are you sure to leave?!");
+    const r = confirm(alertMessage);
     setShowModal(false)
     if (r == true) {
       handleModalLeave()
@@ -132,5 +131,16 @@ const BeforeUnload = ({
     </React.Fragment>
   )
 }
+
+BeforeUnload.propTypes = {
+  blockRoute: PropTypes.boolean, 
+  ignoreBeforeUnloadAlert: PropTypes.boolean,   
+  historyMode: PropTypes.boolean, 
+  replace: PropTypes.boolean, 
+  children: PropTypes.element.isRequired,
+  alertMessage: PropTypes.string,
+  handleAfterLeave: PropTypes.func,
+  modalComponentHandler: PropTypes.element
+};
 
 export default BeforeUnload;
