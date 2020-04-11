@@ -69,6 +69,7 @@ const Example = () => {
         <BeforeUnloadComponent ref={el => (this.componentRef = el)} />
       </div>
     );
+
 }
 ....
 
