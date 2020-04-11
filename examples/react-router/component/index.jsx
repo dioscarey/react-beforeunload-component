@@ -4,7 +4,8 @@ import {
   Switch,
   Route,
   Link,
-  useRouteMatch
+  useRouteMatch,
+  useHistory
 } from "react-router-dom";
 import BeforeUnload from 'react-beforeunload-component'
 
@@ -33,10 +34,16 @@ const About = () => {
 
 
 const Home = () => {
+  let history = useHistory();
+
   return (
     <div>
       <BeforeUnload
-      blockRoute={true}        
+        blockRoute={true}      
+        historyMode={true}  
+        handleAfterLeave={({to}) => {
+          history.push(to);
+        }}
         >
         <h2>Component Before Un Load</h2>
       </BeforeUnload>
