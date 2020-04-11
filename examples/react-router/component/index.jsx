@@ -7,7 +7,7 @@ import {
   useRouteMatch,
   useHistory
 } from "react-router-dom";
-import BeforeUnload from 'react-beforeunload-component'
+import BeforeUnloadComponent from 'react-beforeunload-component'
 
 const OldSchoolMenuLink = ({ label, to, activeOnlyWhenExact }) => {
   let match = useRouteMatch({
@@ -38,7 +38,7 @@ const Home = () => {
 
   return (
     <div>
-      <BeforeUnload
+      <BeforeUnloadComponent
         blockRoute={true}      
         historyMode={true}  
         handleAfterLeave={({to}) => {
@@ -46,7 +46,7 @@ const Home = () => {
         }}
         >
         <h2>Component Before Un Load</h2>
-      </BeforeUnload>
+      </BeforeUnloadComponent>
     </div>
   )
 }
