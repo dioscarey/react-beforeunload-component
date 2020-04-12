@@ -26,7 +26,7 @@ const MyModal = ({ onClose, onSubmit }) => {
   );
 };
 
-const Hello = () => {
+const Hello = ({}) => {
   let location = useLocation();
 
   return (
@@ -39,6 +39,7 @@ const Hello = () => {
 
 const Form = () => {
   const history = useHistory();
+  const location = useLocation();
   const [blockRoute, setBlockRoute] = useState(true);
   const [name, setName] = useState("");
 
@@ -46,9 +47,6 @@ const Form = () => {
     <div>
       <BeforeUnloadComponent
         blockRoute={blockRoute}
-        handleAfterLeave={({ to }) => {
-          history.push(to);
-        }}
         modalComponentHandler={({ handleModalLeave, handleModalCancel }) => {
           return (
             <MyModal onClose={handleModalCancel} onSubmit={handleModalLeave} />
@@ -60,6 +58,8 @@ const Form = () => {
           <div>This component has a custom pop-up.</div>
           <br/>
           <div>After submitting the pop-up will be disabled.</div>
+          <br/>
+          <div>States also works ={JSON.stringify(location.state)}</div>
           <br/>
           <form
             onSubmit={() => {
@@ -93,9 +93,6 @@ const Home = () => {
     <div>
       <BeforeUnloadComponent
         blockRoute={true}
-        handleAfterLeave={({ to }) => {
-          history.push(to);
-        }}
       >
         <React.Fragment>
           <h2>Before Unload Component</h2>
@@ -103,9 +100,6 @@ const Home = () => {
           <p>          
             <ul>
               <li>{`blockRoute={true}`}</li>            
-              <li>{`handleAfterLeave={({ to }) => {
-                history.push(to);
-              }}`}</li>
             </ul>
           </p>
         </React.Fragment>

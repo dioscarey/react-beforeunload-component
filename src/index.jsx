@@ -5,11 +5,25 @@ import PropTypes from 'prop-types';
  ** Main Function Hook -  Before unload
  */
 
+ const attributeIgnoreExists = (e) => {
+    let exists = false;
+    for (let i = 0, atts = e.target.attributes, n = atts.length; i < n; i++){
+      if(atts[i].nodeName =="ignore")
+        exists = true;
+    }
+    return exists;
+ }
+
+ const removeAttributeIgnore = (e) => {
+  const ele = e.target || e.srcElement;
+  ele.removeAttribute("ignore");
+ }
+  
+
 const BeforeUnload = ({ 
   ignoreBeforeUnloadAlert = false, 
   blockRoute = true, 
   children, 
-  handleAfterLeave,   
   modalComponentHandler,
   alertMessage = "Are you sure you want to leave? Changes will not be saved."
 }) => {
@@ -17,7 +31,7 @@ const BeforeUnload = ({
    * * States
    */
   const [showModal, setShowModal] = useState(false)
-  const [internalData, setInternalData] = useState({})  
+  const [eventData, setEventData] = useState({})  
   /**
    * * Functions
    */  
@@ -30,11 +44,9 @@ const BeforeUnload = ({
   const handleModalLeave = event => {
     if (event && event.preventDefault) event.preventDefault()
     
-    if(handleAfterLeave)
-      handleAfterLeave(internalData)
-    else {
-      window.location.assign(internalData.to)
-    }
+    const ele = eventData.event.target || eventData.event.srcElement;
+    ele.setAttribute("ignore", "true");
+    ele.click();          
 
   }
 
@@ -56,8 +68,13 @@ const BeforeUnload = ({
     }
   }
 
-  const handleClickEvents = (e) => {
 
+  const handleClickEvents = (e) => {
+    if(attributeIgnoreExists(e)) {      
+      removeAttributeIgnore(e);
+      setEventData(null);
+      return true;
+    }else
     if (
       blockRoute &&
       e.currentTarget.pathname &&
@@ -74,11 +91,13 @@ const BeforeUnload = ({
         path = path + hash;
       }
 
-      setInternalData({
+      setEventData({
         to: path,
         toHref: e.target.href,
-        target: e.target
+        target: e.target,
+        event: e
       })
+
       setShowModal(true)
     }
   }
@@ -133,7 +152,6 @@ BeforeUnload.propTypes = {
   ignoreBeforeUnloadAlert: PropTypes.bool,   
   children: PropTypes.any.isRequired,
   alertMessage: PropTypes.string,
-  handleAfterLeave: PropTypes.func,
   modalComponentHandler: PropTypes.any
 };
 
