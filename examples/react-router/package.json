@@ -18,8 +18,7 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2",
-    "react-tooltip": "^4.2.1"
+    "react-router-dom": "^5.1.2"
   },
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development"

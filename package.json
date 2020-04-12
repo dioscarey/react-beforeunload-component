@@ -4,7 +4,8 @@
   "description": "Before unload react component",
   "main": "dist/index.js",
   "scripts": {
-    "build": "webpack --config ./webpack.config.js --progress --mode development"
+    "develop": "webpack --config ./webpack.config.js --progress --mode development --watch",
+    "build:prod": "webpack --config ./webpack.config.js --progress --mode production"
   },
   "repository": {
     "type": "git",

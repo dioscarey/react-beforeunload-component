@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
   entry: './app.jsx',
@@ -6,7 +7,7 @@ module.exports = {
     rules: [
       {
           test: /\.jsx?$/,
-          exclude: /(node_modules|bower_components)/,
+          exclude: /(node_modules|bower_components|public)/,
           use: {
             loader: 'babel-loader',
             options: {
@@ -17,11 +18,15 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx'],
+    alias: {
+      react: path.resolve("./node_modules/react"),
+      BeforeUnloadCompnent: path.resolve(__dirname, './../../dist/'),
+    }
   },
   output: {
-    path: __dirname + '/public',
-    publicPath: '/',
+    path: path.resolve(__dirname, 'public'),  
+    publicPath: '/',    
     filename: 'bundle.js'
   },
   plugins: [
@@ -29,6 +34,7 @@ module.exports = {
   ],
   devServer: {
     contentBase: './public',
-    hot: true
+    hot: true,
+    historyApiFallback: true,
   }
 };

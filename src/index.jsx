@@ -13,14 +13,14 @@ const BeforeUnload = ({
   children, 
   handleAfterLeave,   
   modalComponentHandler,
-  alertMessage = "Are you sure to leave? Changes will not be saved."
+  alertMessage = "Are you sure you want to leave? Changes will not be saved."
 }) => {
   /**
    * * States
    */
 
   const [showModal, setShowModal] = useState(false)
-  const [internalData, setInternalData] = useState({})
+  const [internalData, setInternalData] = useState({})  
   /**
    * * Functions
    */  
@@ -52,6 +52,7 @@ const BeforeUnload = ({
   }
 
   const onUnload = e => {
+    setShowModal(false);
     if (blockRoute) {
       e.preventDefault()
       e.returnValue = '';
@@ -59,10 +60,12 @@ const BeforeUnload = ({
   }
 
   const handleClickEvents = (e) => {
+
     if (
       blockRoute &&
       e.currentTarget.pathname &&
-      e.currentTarget.pathname !== ""
+      e.currentTarget.pathname !== "" &&
+      (e.currentTarget.pathname !== window.location.pathname || e.currentTarget.search !== window.location.search)
     ) {
       e.preventDefault();
       if(historyMode){      
@@ -80,7 +83,6 @@ const BeforeUnload = ({
           to: newurl
         })
       }     
-
       setShowModal(true)
     }
   }
@@ -105,6 +107,8 @@ const BeforeUnload = ({
       window.removeEventListener("beforeunload", onUnload)
   }
 
+  const defaultComponentAlert = modalComponentHandler ||  defaultModalHandler;
+
   /**
    * * Effect
    */
@@ -122,11 +126,7 @@ const BeforeUnload = ({
 
   return (
     <React.Fragment>
-      {showModal && (
-        modalComponentHandler 
-        && modalComponentHandler({handleModalLeave, handleModalCancel}) 
-        || defaultModalHandler()
-      )}
+      {showModal ? defaultComponentAlert({handleModalLeave, handleModalCancel}) : null}
       {children}
     </React.Fragment>
   )
@@ -140,7 +140,7 @@ BeforeUnload.propTypes = {
   children: PropTypes.element.isRequired,
   alertMessage: PropTypes.string,
   handleAfterLeave: PropTypes.func,
-  modalComponentHandler: PropTypes.element
+  modalComponentHandler: PropTypes.any
 };
 
 export default BeforeUnload;

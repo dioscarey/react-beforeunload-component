@@ -1,13 +1,80 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <title>Basic React</title>
+    <meta charset="utf-8" />
+    <title>React Beforeunload | react-router</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        background: #eee;
+        padding: 100px;
+      }
+      body,
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      button {
+        cursor: pointer;
+        border: 0;
+        background: #30b1fd;
+        color: white;
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        line-height: 1;
+      }
+      input {
+        width: 300px;
+        margin-top: 8px;
+        padding: 11px;
+        border-radius: 9px;
+        border: none;
+        font-size: 20px;
+        font-weight: 300;
+      }
+      .modal {
+        width: 500px;
+        background: white;
+        border: 1px solid #ccc;
+        transition: 1.1s ease-out;
+        box-shadow: -2rem 2rem 2rem rgba(0, 0, 0, 0.2);
+        filter: blur(0);
+        transform: scale(1);
+        opacity: 1;
+        visibility: visible;
+        position: absolute;
+        margin: 0 auto;
+        right: 0;
+        left: 0;
+      }
+      .modal h2 {
+        border-bottom: 1px solid #ccc;
+        padding: 1rem;
+        margin: 0;
+      }
+      .modal .content {
+        padding: 1rem;
+      }
+      .modal .actions {
+        border-top: 1px solid #ccc;
+        background: #eee;
+        padding: 0.5rem 1rem;
+      }
+      .modal .actions button {
+        margin-right: 20px;
+      }
+    </style>
   </head>
   <body>
-    <div id="app">
-      
-    </div>
+    <div id="app"></div>
     <script src="./bundle.js" charset="utf-8"></script>
   </body>
 </html>

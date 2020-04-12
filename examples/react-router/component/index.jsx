@@ -1,37 +1,91 @@
-import React, {Component} from "react"
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
-  useRouteMatch,
-  useHistory
+  useHistory,
+  useLocation
 } from "react-router-dom";
-import BeforeUnloadComponent from 'react-beforeunload-component'
+import BeforeUnloadComponent from "BeforeUnloadCompnent/index";
 
-const OldSchoolMenuLink = ({ label, to, activeOnlyWhenExact }) => {
-  let match = useRouteMatch({
-    path: to,
-    exact: activeOnlyWhenExact
-  });
-
+const MyModal = ({ onClose, onSubmit }) => {
   return (
-    <div className={match ? "active" : ""}>
-      {match && "> "}
-      <Link to={to}>{label}</Link>
+    <div className="modal" id="modal">
+      <h2>Modal Window</h2>
+      <div className="content">If you leave changes will not be saved.</div>
+      <div className="actions">
+        <button className="toggle-button" onClick={onSubmit}>
+          Leave
+        </button>
+        <button className="toggle-button" onClick={onClose}>
+          Cancel
+        </button>
+      </div>
     </div>
   );
-}
+};
 
+const Hello = () => {
+  let location = useLocation();
 
-const About = () => {
   return (
-    <div>c
-      <h2>About</h2>
+    <div>
+      <h1>Hi {location.state.name}</h1>
+      <p>Alert was desactivated!</p>
     </div>
   );
-}
+};
 
+const Form = () => {
+  const history = useHistory();
+  const [blockRoute, setBlockRoute] = useState(true);
+  const [name, setName] = useState("");
+
+  return (
+    <div>
+      <BeforeUnloadComponent
+        blockRoute={blockRoute}
+        historyMode={true}
+        handleAfterLeave={({ to }) => {
+          history.push(to);
+        }}
+        modalComponentHandler={({ handleModalLeave, handleModalCancel }) => {
+          return (
+            <MyModal onClose={handleModalCancel} onSubmit={handleModalLeave} />
+          );
+        }}
+      >
+        <div>
+          <h2>Custom Modal Before Unload</h2>
+          <div>This component has a custom pop-up.</div>
+          <br/>
+          <div>After submitting the pop-up will be disabled.</div>
+          <br/>
+          <form
+            onSubmit={() => {
+              setBlockRoute(false);
+              history.push("/hello", { name });
+            }}
+          >
+            <div>
+              <label htmlFor="">My name</label>
+              <br />
+              <input
+                type="text"
+                value={name}
+                onChange={e => setName(e.currentTarget.value)}
+              />
+            </div>
+            <br />
+            <br />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </BeforeUnloadComponent>
+    </div>
+  );
+};
 
 const Home = () => {
   let history = useHistory();
@@ -39,46 +93,50 @@ const Home = () => {
   return (
     <div>
       <BeforeUnloadComponent
-        blockRoute={true}      
-        historyMode={true}  
-        handleAfterLeave={({to}) => {
+        blockRoute={true}
+        historyMode={true}
+        handleAfterLeave={({ to }) => {
           history.push(to);
         }}
-        >
-        <h2>Component Before Un Load</h2>
+      >
+        <h2>Before Unload Component</h2>
+        <p>
+          <div>This component has the default alert.</div>
+
+          <ul>
+            <li>{`blockRoute={true}`}</li>
+            <li>{`historyMode={true}`}</li>
+            <li>{`handleAfterLeave={({ to }) => {
+              history.push(to);
+            }}`}</li>
+          </ul>
+        </p>
       </BeforeUnloadComponent>
     </div>
-  )
-}
+  );
+};
 
-// This example show how you could create a custom
-// <Link> that renders something special when the URL
-// is the same as the one the <Link> points to.
+const App = () => {
 
-export default class App extends Component {
-  render(){
-    return (
-      <Router>
-        <div>
-          <OldSchoolMenuLink
-            activeOnlyWhenExact={true}
-            to="/"
-            label="Home"
-          />
-          <OldSchoolMenuLink to="/about" label="About" />
+  return (
+    <div>
+      <Link to={`/`}>Home</Link>
+      <span> | </span>
+      <Link to={`/form`}>Modal</Link>
+      <hr />
+      <Switch>
+        <Route exact path={'/'}>
+          <Home />
+        </Route>
+        <Route exact path={`/form`}>
+          <Form />
+        </Route>
+        <Route exact path={`/hello`}>
+          <Hello />
+        </Route>
+      </Switch>
+    </div>
+  );
+};
 
-          <hr />
-
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/about">
-              <About />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    );
-  }
-}
+export default App;
