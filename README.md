@@ -2,7 +2,7 @@
 
 # React Beforeunload Component
 
-Currently Beforeunload works when the browser detects the change of the pathname
+Beforeunload works when the document and resources are about to be unloaded but it doesn't detect react components that will be unmounted.
 
 
 ## Install
@@ -30,7 +30,7 @@ const Example = () => {
             }}
         /> 
             <form> ... </form>
-        <BeforeUnloadComponent ref={el => (this.componentRef = el)} />
+        <BeforeUnloadComponent />
       </div>
     );
 }
@@ -66,7 +66,7 @@ const Example = () => {
             }}
         />  
             <form id="myform"> ... </form>
-        <BeforeUnloadComponent ref={el => (this.componentRef = el)} />
+        <BeforeUnloadComponent/>
       </div>
     );
 
