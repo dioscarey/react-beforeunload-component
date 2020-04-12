@@ -1,6 +1,6 @@
 {
   "name": "react-beforeunload-component",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Before unload react component",
   "main": "dist/index.js",
   "scripts": {
