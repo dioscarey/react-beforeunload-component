@@ -1,4 +1,6 @@
 
+[![NPM registry](https://img.shields.io/npm/v/react-beforeunload-component.svg?style=for-the-badge)](https://yarnpkg.com/en/package/react-beforeunload-component) 
+[![NPM license](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](LICENSE.md)
 
 # React Beforeunload Component
 
