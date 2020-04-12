@@ -46,7 +46,6 @@ const Form = () => {
     <div>
       <BeforeUnloadComponent
         blockRoute={blockRoute}
-        historyMode={true}
         handleAfterLeave={({ to }) => {
           history.push(to);
         }}
@@ -94,7 +93,6 @@ const Home = () => {
     <div>
       <BeforeUnloadComponent
         blockRoute={true}
-        historyMode={true}
         handleAfterLeave={({ to }) => {
           history.push(to);
         }}
@@ -104,8 +102,7 @@ const Home = () => {
           <div>This component has the default alert.</div>
           <p>          
             <ul>
-              <li>{`blockRoute={true}`}</li>
-              <li>{`historyMode={true}`}</li>
+              <li>{`blockRoute={true}`}</li>            
               <li>{`handleAfterLeave={({ to }) => {
                 history.push(to);
               }}`}</li>
@@ -123,7 +120,12 @@ const App = () => {
     <div>
       <Link to={`/`}>Home</Link>
       <span> | </span>
-      <Link to={`/form`}>Modal</Link>
+      <Link to={{
+        pathname: "/form",
+        search: "?test=1",
+        hash: "#the-hash",
+        state: { stateTest: true }
+      }}>Modal</Link>
       <hr />
       <Switch>
         <Route exact path={'/'}>

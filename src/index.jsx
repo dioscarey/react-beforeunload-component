@@ -8,8 +8,6 @@ import PropTypes from 'prop-types';
 const BeforeUnload = ({ 
   ignoreBeforeUnloadAlert = false, 
   blockRoute = true, 
-  historyMode = false,
-  replace = false, 
   children, 
   handleAfterLeave,   
   modalComponentHandler,
@@ -67,21 +65,20 @@ const BeforeUnload = ({
       (e.currentTarget.pathname !== window.location.pathname || e.currentTarget.search !== window.location.search)
     ) {
       e.preventDefault();
-      if(historyMode){      
-        setInternalData({
-          replace: replace || false,
-          state: {},
-          to: e.currentTarget.pathname + e.currentTarget.search,
-        })
-      } else {
-        const linkElement = e.currentTarget;
-        const newurl = linkElement.protocol + "//" + linkElement.host + linkElement.pathname + '?' + linkElement.search;
-        setInternalData({
-          state: null,
-          href: linkElement,
-          to: newurl
-        })
-      }     
+      const {pathname, search, hash} = e.target;
+      let path = pathname;      
+      if(search && search !== "") {
+        path = path + search;
+      }
+      if(hash && hash !== "") {
+        path = path + hash;
+      }
+
+      setInternalData({
+        to: path,
+        toHref: e.target.href,
+        target: e.target
+      })
       setShowModal(true)
     }
   }
@@ -134,9 +131,7 @@ const BeforeUnload = ({
 BeforeUnload.propTypes = {
   blockRoute: PropTypes.bool, 
   ignoreBeforeUnloadAlert: PropTypes.bool,   
-  historyMode: PropTypes.bool, 
-  replace: PropTypes.bool, 
-  children: PropTypes.array.isRequired,
+  children: PropTypes.any.isRequired,
   alertMessage: PropTypes.string,
   handleAfterLeave: PropTypes.func,
   modalComponentHandler: PropTypes.any

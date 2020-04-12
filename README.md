@@ -22,8 +22,7 @@ const Example = () => {
     return (
       <div>
         <BeforeUnloadComponent
-            blockRoute={true}   
-            historyMode={true}  
+            blockRoute={true}               
             handleAfterLeave={({to}) => {
                 // Example with react-router-dom
                 history.push(to);
@@ -51,7 +50,6 @@ const Example = () => {
       <div>
         <BeforeUnloadComponent
             blockRoute={true}   
-            historyMode={true}  
             handleAfterLeave={({to, state}) => {
                 // Example with gatsby
                 navigate.push(to, state);
@@ -80,8 +78,6 @@ const Example = () => {
 | :-------------------: | :-------: | :------- | :---------------------------------------------------------------------------------------------------------------------------------- |
 |     **`blockRoute`**  | `boolean` | `true` | If it's false the router will be blocked |
 |     **`ignoreBeforeUnloadAlert`**  | `boolean` | `false` |  it will ignore default reloading page alert.  |
-|     **`historyMode`**     | `boolean` | `true` |  Necessary to return a state mode in case you are using react-router or @reach-router or similar library that use pushState history, if you don't need it, set it as false.  |
-|   **`replace`**    | `boolean`  | `false` | historyMode needs to be __true__ to replace the history state. |
 |   **`handleAfterLeave`**  | `function` | `optional` | It's necessary to handle the router, if this prop is omitted, it will reload the page everytime the pathname changes. |
 |   **`modalComponentHandler`**  | `function`  | `optional` | You can use your custom modal. The limitation for the moment is that when the page is reloaded the default browser alert will be displayed instead of your modalcomponent. |
 | **`alertMessage`** | `string` | `optional` | If you don't want to use a React Modal Component you can use the default alert (Browsers defaults) with your own message. |                                                                              
