@@ -64,8 +64,11 @@ const Example = () => {
 
 |         Name          | Type     | Default  | Description |
 | :-------------------: | :-------: | :------- | :---------------------------------------------------------------------------------------------------------------------------------- |
-|     **`blockRoute`**  | `boolean` | `true` | If it's false the router will be blocked |
-|     **`ignoreBeforeUnloadAlert`**  | `boolean` | `false` |  it will ignore default reloading page alert.  |
+|     **`blockRoute`**  | `boolean` | `true` | If it's false the router will not blocked |
+|     **`ignoreBeforeUnloadAlert`**  | `boolean` | `false` |  It will ignore default reloading page alert.  |
 |   **`modalComponentHandler`**  | `function`  | `optional` | You can use your custom modal. The limitation for the moment is that when the page is reloaded the default browser alert will be displayed instead of your modalcomponent. |
 | **`alertMessage`** | `string` | `optional` | If you don't want to use a React Modal Component you can use the default alert (Browsers defaults) with your own message. |                                                                              
 
+### Limitations
+
+Ipad browsers like safari and chrome don't detect the event beforeunload. So, when you want to reload the page, the browser alert will not be shown. There's some work to do to patch this issue.
