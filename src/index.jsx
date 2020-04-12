@@ -1,9 +1,7 @@
 //* modules
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-/** *========================================
- ** Main Function Hook -  Before unload
- */
+//* Globals
 
 const attributeIgnoreExists = e => {
   let exists = false;
@@ -17,6 +15,22 @@ const removeAttributeIgnore = e => {
   const ele = e.target || e.srcElement;
   ele.removeAttribute("ignore");
 };
+
+const getPath = e => {
+  const { pathname, search, hash } = e.target;
+  let path = pathname;
+  if (search && search !== "") {
+    path = path + search;
+  }
+  if (hash && hash !== "") {
+    path = path + hash;
+  }
+  return path;
+}
+
+/** *========================================
+ ** Main Function Hook -  Before unload
+ */
 
 const BeforeUnload = ({
   ignoreBeforeUnloadAlert = false,
@@ -72,25 +86,12 @@ const BeforeUnload = ({
       return true;
     } else if (
       blockRoute &&
-      e.currentTarget.pathname &&
-      e.currentTarget.pathname !== "" &&
-      (e.currentTarget.pathname !== window.location.pathname ||
-        e.currentTarget.search !== window.location.search)
+      e.target.href !== window.location.href
     ) {
-      e.preventDefault();
-      const { pathname, search, hash } = e.target;
-      let path = pathname;
-      if (search && search !== "") {
-        path = path + search;
-      }
-      if (hash && hash !== "") {
-        path = path + hash;
-      }
-
+      e.preventDefault();      
       setEventData({
-        to: path,
+        to: getPath(e),
         toHref: e.target.href,
-        target: e.target,
         event: e
       });
 
