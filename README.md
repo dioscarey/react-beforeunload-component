@@ -4,6 +4,9 @@
 
 Beforeunload works when the document and resources are about to be unloaded but it doesn't detect react components that will be unmounted.
 
+## Demo
+
+[![Edit react-beforeunload-component](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/react-beforeunload-component-mr2zp?file=/src/App.js)
 
 ## Install
 *NOTE*: react version ^16.8 for hooks

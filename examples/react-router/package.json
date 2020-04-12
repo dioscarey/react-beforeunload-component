@@ -9,14 +9,13 @@
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
     "babel-loader": "^8.0.6",
-    "react-beforeunload-component": "^1.0.0",
     "react-hot-loader": "^4.12.19",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "react": "^16.13.1",
+    "react": "^16.13.1",    
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2"
   },

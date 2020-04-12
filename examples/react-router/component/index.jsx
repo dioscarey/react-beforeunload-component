@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Link,
@@ -26,7 +25,7 @@ const MyModal = ({ onClose, onSubmit }) => {
   );
 };
 
-const Hello = ({}) => {
+const Hello = () => {
   let location = useLocation();
 
   return (
@@ -87,7 +86,6 @@ const Form = () => {
 };
 
 const Home = () => {
-  let history = useHistory();
 
   return (
     <div>
@@ -116,10 +114,8 @@ const App = () => {
       <span> | </span>
       <Link to={{
         pathname: "/form",
-        search: "?test=1",
-        hash: "#the-hash",
         state: { stateTest: true }
-      }}>Modal</Link>
+      }}>Form</Link>
       <hr />
       <Switch>
         <Route exact path={'/'}>
