@@ -14,7 +14,11 @@
   "keywords": [
     "react-beforeunload",
     "beforeunload",
-    "beforeunload-react"
+    "beforeunload-react",
+    "beforeunload-react-component",
+    "react-beforeunload-component",
+    "before-unload",
+    "onbeforeunload"
   ],
   "author": "Oscar D. Rendón L.",
   "license": "MIT",

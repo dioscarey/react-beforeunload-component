@@ -13,11 +13,9 @@ Beforeunload works when the document and resources are about to be unloaded but 
 ## Example React Hook
 ```js
 import React from 'react';
-import { useHistory } from "react-router-dom";
 import BeforeUnloadComponent from 'react-beforeunload-component';
 // React Hook
 const Example = () => {
-    let history = useHistory();
     
     return (
       <div>
@@ -35,12 +33,10 @@ const Example = () => {
 ## Example React Hook - Your Modal Component
 ```js
 import React from 'react';
-import { navigate } from "gatsby";
 import BeforeUnloadComponent from 'react-beforeunload-component';
-import MyModal from '../../MyModal';
+import MyModal from 'path/MyModal';
 // React Hook
 const Example = () => {
-    let history = useHistory();
     
     return (
       <div>
