@@ -18,7 +18,6 @@ const BeforeUnload = ({
   /**
    * * States
    */
-
   const [showModal, setShowModal] = useState(false)
   const [internalData, setInternalData] = useState({})  
   /**
@@ -133,11 +132,11 @@ const BeforeUnload = ({
 }
 
 BeforeUnload.propTypes = {
-  blockRoute: PropTypes.boolean, 
-  ignoreBeforeUnloadAlert: PropTypes.boolean,   
-  historyMode: PropTypes.boolean, 
-  replace: PropTypes.boolean, 
-  children: PropTypes.element.isRequired,
+  blockRoute: PropTypes.bool, 
+  ignoreBeforeUnloadAlert: PropTypes.bool,   
+  historyMode: PropTypes.bool, 
+  replace: PropTypes.bool, 
+  children: PropTypes.array.isRequired,
   alertMessage: PropTypes.string,
   handleAfterLeave: PropTypes.func,
   modalComponentHandler: PropTypes.any

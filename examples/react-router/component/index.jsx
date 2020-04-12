@@ -99,18 +99,19 @@ const Home = () => {
           history.push(to);
         }}
       >
-        <h2>Before Unload Component</h2>
-        <p>
+        <React.Fragment>
+          <h2>Before Unload Component</h2>
           <div>This component has the default alert.</div>
-
-          <ul>
-            <li>{`blockRoute={true}`}</li>
-            <li>{`historyMode={true}`}</li>
-            <li>{`handleAfterLeave={({ to }) => {
-              history.push(to);
-            }}`}</li>
-          </ul>
-        </p>
+          <p>          
+            <ul>
+              <li>{`blockRoute={true}`}</li>
+              <li>{`historyMode={true}`}</li>
+              <li>{`handleAfterLeave={({ to }) => {
+                history.push(to);
+              }}`}</li>
+            </ul>
+          </p>
+        </React.Fragment>
       </BeforeUnloadComponent>
     </div>
   );
