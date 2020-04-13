@@ -6,6 +6,7 @@ module.exports = {
     filename: 'index.js',
     publicPath: '/',
     libraryTarget: 'umd',
+    globalObject: 'this'
   },
   module:  {
     rules: [
