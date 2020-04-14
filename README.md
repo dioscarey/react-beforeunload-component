@@ -72,7 +72,7 @@ const Example = () => {
 |         Name          | Type     | Default  | Description |
 | :-------------------: | :-------: | :------- | :---------------------------------------------------------------------------------------------------------------------------------- |
 |     **`blockRoute`**  | `boolean` | `true` | If it's false the router will not blocked |
-|     **`ignoreBeforeUnloadAlert`**  | `boolean` | `false` |  It will ignore default reloading page alert.  |
+|     **`ignoreBeforeunloadDocument`**  | `boolean` | `false` |  It will ignore default reloading page alert.  |
 |   **`modalComponentHandler`**  | `function`  | `window.confirm(...)` | You can use your custom modal component instead of the default alert. |
 | **`alertMessage`** | `string` | `"Are you sure you want to leave? Changes will not be saved."` | If you don't want to use a React Modal Component you can use the default alert (Browsers defaults) with your own message. |                                                                              
 
