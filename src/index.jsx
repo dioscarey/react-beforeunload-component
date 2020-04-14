@@ -33,7 +33,7 @@ const getPath = e => {
  */
 
 const BeforeUnload = ({
-  ignoreBefoureunloadDocument = false,
+  ignoreBeforeunloadDocument = false,
   blockRoute = true,
   children,
   modalComponentHandler,
@@ -107,7 +107,7 @@ const BeforeUnload = ({
       links[i].addEventListener("click", handleClickEvents, false);
     }
 
-    if (!ignoreBefoureunloadDocument)
+    if (!ignoreBeforeunloadDocument)
       window.addEventListener("beforeunload", onUnload);
   };
 
@@ -117,7 +117,7 @@ const BeforeUnload = ({
       links[i].removeEventListener("click", handleClickEvents, false);
     }
 
-    if (!ignoreBeforeUnloadAlert)
+    if (!ignoreBeforeunloadDocument)
       window.removeEventListener("beforeunload", onUnload);
   };
 
@@ -150,7 +150,7 @@ const BeforeUnload = ({
 
 BeforeUnload.propTypes = {
   blockRoute: PropTypes.bool,
-  ignoreBefoureunloadDocument: PropTypes.bool,
+  ignoreBeforeunloadDocument: PropTypes.bool,
   children: PropTypes.any.isRequired,
   alertMessage: PropTypes.string,
   modalComponentHandler: PropTypes.any
