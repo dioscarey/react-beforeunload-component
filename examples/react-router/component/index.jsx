@@ -39,7 +39,7 @@ const Hello = () => {
 const Form = () => {
   const history = useHistory();
   const location = useLocation();
-  const [blockRoute, setBlockRoute] = useState(true);
+  const [blockRoute, setBlockRoute] = useState(false);
   const [name, setName] = useState("");
 
   return (
@@ -60,6 +60,8 @@ const Form = () => {
           <br/>
           <div>States also works ={JSON.stringify(location.state)}</div>
           <br/>
+          <div><b>blockRoute={blockRoute ? <span style={{color:'green'}}>true</span> : <span style={{color:'red'}}>false</span>} | <span>{!blockRoute ? 'Form is not updated' : 'form is updated! blockRoute activated'}</span></b></div>
+          <br/>
           <form
             onSubmit={() => {
               setBlockRoute(false);
@@ -72,7 +74,12 @@ const Form = () => {
               <input
                 type="text"
                 value={name}
-                onChange={e => setName(e.currentTarget.value)}
+                onChange={e => {
+                  setName(e.currentTarget.value)
+                  if(e.currentTarget.value !== "") {
+                    setBlockRoute(true)
+                  }
+                }}
               />
             </div>
             <br />
