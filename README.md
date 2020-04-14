@@ -3,7 +3,11 @@
 
 # React Beforeunload Component
 
-Beforeunload works when the document and resources are about to be unloaded but it doesn't detect react components that will be unmounted.
+Beforeunload works when the document and resources are about to be unloaded and react components that will be unmounted.
+
+### Compatible
+
+gatsby, react-router, @reach-router, netflix.js and more..
 
 ## Demo
 

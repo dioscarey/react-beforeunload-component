@@ -3,15 +3,15 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 //* Globals
 
-const attributeIgnoreExists = e => {
+const attributeExists = (e, attr) => {
   let exists = false;
   for (let i = 0, atts = e.target.attributes, n = atts.length; i < n; i++) {
-    if (atts[i].nodeName === "ignore") exists = true;
+    if (atts[i].nodeName === attr) exists = true;
   }
   return exists;
 };
 
-const removeAttributeIgnore = e => {
+const removeAttributeIgnore = (e) => {
   const ele = e.target || e.srcElement;
   ele.removeAttribute("ignore");
 };
@@ -33,7 +33,7 @@ const getPath = e => {
  */
 
 const BeforeUnload = ({
-  ignoreBeforeUnloadAlert = false,
+  ignoreBefoureunloadDocument = false,
   blockRoute = true,
   children,
   modalComponentHandler,
@@ -75,17 +75,19 @@ const BeforeUnload = ({
     setShowModal(false);
     if (blockRoute) {
       e.preventDefault();
-      e.returnValue = "";
+      e.returnValue = alertMessage;
+      return alertMessage;
     }
   };
 
   const handleClickEvents = e => {
-    if (attributeIgnoreExists(e)) {
+    if (attributeExists(e, 'ignore')) {
       removeAttributeIgnore(e);
       setEventData(null);
       return true;
     } else if (
       blockRoute &&
+      attributeExists(e, 'href') && 
       e.target.href !== window.location.href
     ) {
       e.preventDefault();      
@@ -105,7 +107,7 @@ const BeforeUnload = ({
       links[i].addEventListener("click", handleClickEvents, false);
     }
 
-    if (!ignoreBeforeUnloadAlert)
+    if (!ignoreBefoureunloadDocument)
       window.addEventListener("beforeunload", onUnload);
   };
 
@@ -148,7 +150,7 @@ const BeforeUnload = ({
 
 BeforeUnload.propTypes = {
   blockRoute: PropTypes.bool,
-  ignoreBeforeUnloadAlert: PropTypes.bool,
+  ignoreBefoureunloadDocument: PropTypes.bool,
   children: PropTypes.any.isRequired,
   alertMessage: PropTypes.string,
   modalComponentHandler: PropTypes.any
