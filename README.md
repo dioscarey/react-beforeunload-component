@@ -72,13 +72,13 @@ const Example = () => {
 
 If you want to ignore some links you need to add an attribute:
 
-```
+```js
 <a custom-ignore={"true"} href="path">Path</a>
 ```
 
 or, also you can ignore all the children links
 
-```
+```js
 <BeforeUnloadComponent
     ignoreChildrenLinks={true}
     blockRoute={true}
