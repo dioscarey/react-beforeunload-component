@@ -94,8 +94,6 @@ or, also you can ignore all the children links
 
 | Name | Type | Default | Description |
 | :--: | :--: | :------ | :---------- |
-
-
 | **`blockRoute`** | `boolean` | `true` | If it's false the router will not be blocked |
 | **`ignoreBeforeunloadDocument`** | `boolean` | `false` | It ignores default reloading page alert. |
 | **`modalComponentHandler`** | `function` | `window.confirm(...)` | You can use your custom modal component instead of the default alert. |
