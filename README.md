@@ -76,7 +76,7 @@ If you want to ignore some links you need to add an attribute:
 <a custom-ignore={"true"} href="path">Path</a>
 ```
 
-or, also you can ignore all the children links
+or, you can ignore all the children links:
 
 ```js
 <BeforeUnloadComponent
@@ -99,9 +99,9 @@ or, also you can ignore all the children links
 | **`modalComponentHandler`** | `function` | `window.confirm(...)` | You can use your custom modal component instead of the default alert. |
 | **`alertMessage`** | `string` | `"Are you sure you want to leave? Changes will not be saved."` | If you don't want to use a React Modal Component you can use the default alert (Browsers defaults) with your own message. |  
 | **`ignoreChildrenLinks`** | `boolean` | `false` | If it's true is going to ignore all the children links |
-| **`beforeUnload`** | `function` | `none` | Manage data before the component is unload |
-| **`beforeUnloadSendBeacon`** | `beforeUnloadSendBeacon` | `none` | Manage data before the document is unload |
+| **`beforeUnload`** | `function` | `null` | Manage data before the component is unload |
+| **`beforeUnloadSendBeacon`** | `object` | `null` | Manage data before the document is unload with sendBeacon( path, data). More info about sendBeacon, [click here](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon). |
 
 ### Limitations
 
-Ipad and Iphones browsers like safari and chrome don't detect the event beforeunload, for this readon, when you want to reload the page the browser alert will not be shown. There's some work to do to patch this issue.
+Ipad and Iphones browsers like safari and chrome don't trigger the event beforeunload, for this reason, when you want to reload the page the browser alert will not be shown. There's some work to do to patch this issue.
