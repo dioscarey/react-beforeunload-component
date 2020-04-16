@@ -1,47 +1,51 @@
 //* modules
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
+
 //* Globals
+
+let ignoreAlert = false;
 
 const attributeExists = (e, attr) => {
   let exists = false;
-  for (let i = 0, atts = e.target.attributes, n = atts.length; i < n; i++) {
-    if (atts[i].nodeName === attr) exists = true;
+  let elem = e.target === "" ? e : e.target;
+
+  for (let i = 0, atts = elem.attributes, n = atts.length; i < n; i++) {
+    if (typeof attr === "object") {
+      const index = attr.findIndex(a => a === atts[i].nodeName);
+      if (index > -1) exists = true;
+    } else if (atts[i].nodeName === attr) {
+      exists = true;
+    }
   }
+
   return exists;
 };
 
-const removeAttributeIgnore = (e) => {
+const removeAttributeIgnore = e => {
   const ele = e.target || e.srcElement;
-  ele.removeAttribute("ignore");
+  ele.removeAttribute("ignoreTemp");
 };
-
-const getPath = e => {
-  const { pathname, search, hash } = e.target;
-  let path = pathname;
-  if (search && search !== "") {
-    path = path + search;
-  }
-  if (hash && hash !== "") {
-    path = path + hash;
-  }
-  return path;
-}
 
 /** *========================================
  ** Main Function Hook -  Before unload
  */
 
-const BeforeUnload = ({
+const BeforeUnloadComponent = ({
+  ignoreChildrenLinks = false,
   ignoreBeforeunloadDocument = false,
   blockRoute = true,
   children,
   modalComponentHandler,
+  beforeUnload,
+  beforeUnloadSendBeacon,
   alertMessage = "Are you sure you want to leave? Changes will not be saved."
 }) => {
   /**
    * * States
    */
+
+  let childEle = useRef();
   const [showModal, setShowModal] = useState(false);
   const [eventData, setEventData] = useState({});
   /**
@@ -54,10 +58,30 @@ const BeforeUnload = ({
   };
 
   const handleModalLeave = event => {
+    const ele = eventData.event.target || eventData.event.srcElement;
     if (event && event.preventDefault) event.preventDefault();
 
-    const ele = eventData.event.target || eventData.event.srcElement;
-    ele.setAttribute("ignore", "true");
+    setShowModal(false);
+
+    const updateClick = eleUpdated => {
+      eleUpdated.setAttribute("ignoretemp", "true");
+      eleUpdated.click();
+    };
+
+    console.log(beforeUnload);
+
+    if (beforeUnload) {
+      return beforeUnload(() => {
+        updateClick(ele);
+      });
+    }
+
+    return updateClick(ele);
+  };
+
+  const handleIgnoreLink = event => {
+    const ele = event.target || event.srcElement;
+    ele.setAttribute("ignoretemp", "true");
     ele.click();
   };
 
@@ -73,52 +97,80 @@ const BeforeUnload = ({
 
   const onUnload = e => {
     setShowModal(false);
-    if (blockRoute) {
+    if (blockRoute && !ignoreAlert) {
       e.preventDefault();
       e.returnValue = alertMessage;
       return alertMessage;
+    } else {
+      ignoreAlert = false;
     }
   };
 
   const handleClickEvents = e => {
-    if (attributeExists(e, 'ignore')) {
+    if (attributeExists(e, "ignoretemp")) {
       removeAttributeIgnore(e);
-      setEventData(null);
-      return true;
-    } else if (
-      blockRoute &&
-      attributeExists(e, 'href') && 
-      e.target.href !== window.location.href
-    ) {
-      e.preventDefault();      
+      setEventData({});
+    } else if (blockRoute && e.target.href !== window.location.href) {
+      e.preventDefault();
+
+      if (attributeExists(e, ["custom-ignore", "ignore"])) {
+        ignoreAlert = true;
+        return handleIgnoreLink(e);
+      }
+
       setEventData({
-        to: getPath(e),
-        toHref: e.target.href,
         event: e
       });
-
-      setShowModal(true);
+      return setShowModal(true);
     }
+
+    return true;
+  };
+
+  const handleBeacon = () => {
+    return navigator.sendBeacon(
+      beforeUnloadSendBeacon.path,
+      beforeUnloadSendBeacon.data
+    );
   };
 
   const setEventListeners = () => {
     const links = document.getElementsByTagName("a");
-    for (var i = 0; i < links.length; i++) {
-      links[i].addEventListener("click", handleClickEvents, false);
+    for (let i = 0; i < links.length; i++) {
+      if (attributeExists(links[i], "href")) {
+        links[i].addEventListener("click", handleClickEvents, false);
+      }
+    }
+
+    if (ignoreChildrenLinks && childEle.current) {
+      const childrenLinks = childEle.current.getElementsByTagName("a");
+      for (let i = 0; i < childrenLinks.length; i++) {
+        childrenLinks[i].setAttribute("ignore", "true");
+      }
     }
 
     if (!ignoreBeforeunloadDocument)
       window.addEventListener("beforeunload", onUnload);
+
+    if (beforeUnloadSendBeacon) {
+      if (!navigator.sendBeacon)
+        throw "sendBeacon not supported | remove beforeUnloadSendBeacon ";
+      window.addEventListener("unload", handleBeacon);
+    }
   };
 
   const removeEventListeners = () => {
     const links = document.getElementsByTagName("a");
-    for (var i = 0; i < links.length; i++) {
+    for (let i = 0; i < links.length; i++) {
       links[i].removeEventListener("click", handleClickEvents, false);
     }
 
     if (!ignoreBeforeunloadDocument)
       window.removeEventListener("beforeunload", onUnload);
+
+    if (beforeUnloadSendBeacon && navigator.sendBeacon) {
+      window.removeEventListener("unload", handleBeacon);
+    }
   };
 
   const defaultComponentAlert = modalComponentHandler || defaultModalHandler;
@@ -126,7 +178,6 @@ const BeforeUnload = ({
   /**
    * * Effect
    */
-
   useEffect(() => {
     setEventListeners();
     return () => {
@@ -137,23 +188,25 @@ const BeforeUnload = ({
   /**
    * * React dom
    */
-
   return (
     <React.Fragment>
       {showModal
         ? defaultComponentAlert({ handleModalLeave, handleModalCancel })
         : null}
-      {children}
+      <span ref={childEle}>{children}</span>
     </React.Fragment>
   );
 };
 
-BeforeUnload.propTypes = {
+BeforeUnloadComponent.propTypes = {
+  ignoreChildrenLinks: PropTypes.bool,
   blockRoute: PropTypes.bool,
   ignoreBeforeunloadDocument: PropTypes.bool,
   children: PropTypes.any.isRequired,
   alertMessage: PropTypes.string,
-  modalComponentHandler: PropTypes.any
+  modalComponentHandler: PropTypes.any,
+  beforeUnload: PropTypes.func,
+  beforeUnloadSendBeacon: PropTypes.object
 };
 
-export default BeforeUnload;
+export default BeforeUnloadComponent;
