@@ -10,14 +10,15 @@ const attributeExists = (e, attr) => {
   let exists = false;
   let elem = e.target === "" ? e : e.target;
 
-  for (let i = 0, atts = elem.attributes, n = atts.length; i < n; i++) {
-    if (typeof attr === "object") {
-      const index = attr.findIndex(a => a === atts[i].nodeName);
-      if (index > -1) exists = true;
-    } else if (atts[i].nodeName === attr) {
-      exists = true;
+  if(elem.attributes)
+    for (let i = 0, atts = elem.attributes, n = atts.length; i < n; i++) {
+      if (typeof attr === "object") {
+        const index = attr.findIndex(a => a === atts[i].nodeName);
+        if (index > -1) exists = true;
+      } else if (atts[i].nodeName === attr) {
+        exists = true;
+      }
     }
-  }
 
   return exists;
 };
@@ -136,17 +137,19 @@ const BeforeUnloadComponent = ({
 
   const setEventListeners = () => {
     const links = document.getElementsByTagName("a");
-    for (let i = 0; i < links.length; i++) {
-      if (attributeExists(links[i], "href")) {
-        links[i].addEventListener("click", handleClickEvents, false);
+    if(links)
+      for (let i = 0; i < links.length; i++) {
+        if (attributeExists(links[i], "href")) {
+          links[i].addEventListener("click", handleClickEvents, false);
+        }
       }
-    }
 
     if (ignoreChildrenLinks && childEle.current) {
       const childrenLinks = childEle.current.getElementsByTagName("a");
-      for (let i = 0; i < childrenLinks.length; i++) {
-        childrenLinks[i].setAttribute("ignore", "true");
-      }
+      if(childrenLinks)
+        for (let i = 0; i < childrenLinks.length; i++) {
+          childrenLinks[i].setAttribute("ignore", "true");
+        }
     }
 
     if (!ignoreBeforeunloadDocument)
@@ -161,9 +164,10 @@ const BeforeUnloadComponent = ({
 
   const removeEventListeners = () => {
     const links = document.getElementsByTagName("a");
-    for (let i = 0; i < links.length; i++) {
-      links[i].removeEventListener("click", handleClickEvents, false);
-    }
+    if(links)
+      for (let i = 0; i < links.length; i++) {
+        links[i].removeEventListener("click", handleClickEvents, false);
+      }
 
     if (!ignoreBeforeunloadDocument)
       window.removeEventListener("beforeunload", onUnload);
