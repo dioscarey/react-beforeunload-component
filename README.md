@@ -28,9 +28,9 @@ const Example = () => {
       <div>
         <BeforeUnloadComponent
             blockRoute={true}
-        />
+        >
             <form> ... </form>
-        <BeforeUnloadComponent />
+        </BeforeUnloadComponent>
       </div>
     );
 }
@@ -59,9 +59,9 @@ const Example = () => {
                     />
                 )
             }}
-        />
+        >
             <form id="myform"> ... </form>
-        <BeforeUnloadComponent/>
+        </BeforeUnloadComponent>
       </div>
     );
 
